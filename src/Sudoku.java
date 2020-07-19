@@ -16,19 +16,24 @@ public class Sudoku {
         return formatter;
     }
 
-    public static void addComponentsToPane(Container pane){
+    public static void addComponentsToPane(Container pane) {
 
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        for(int i = 0; i < 9 ; i++) {
+        for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                JFormattedTextField f = new JFormattedTextField( createFormatter("#") );
-                c.fill = GridBagConstraints.HORIZONTAL;
-                c.gridx = i;
+                JFormattedTextField f = new JFormattedTextField(createFormatter("#"));
+                c.gridy = i;
+                c.gridx = j;
                 c.ipadx = 10;
-                c.gridy = j;
-                c.weighty = 0.3;
+                c.insets = new Insets(2, 2, 0, 0);  //padding
+                if (i % 3 == 0)
+                    c.insets = new Insets(12, 2, 0, 0);  //padding
+                if (j % 3 == 0)
+                    c.insets = new Insets(2, 12, 0, 0);  //padding
+                if (i % 3 == 0 && j % 3 == 0)
+                    c.insets = new Insets(12, 12, 0, 0);  //padding
                 pane.add(f, c);
             }
         }
@@ -38,7 +43,7 @@ public class Sudoku {
         c.gridy = 10;
         c.gridwidth = 5;
         c.weighty = 1.0;
-        pane.add(button,c);
+        pane.add(button, c);
     }
 
     private static void createAndShowGUI() {
@@ -50,10 +55,11 @@ public class Sudoku {
         addComponentsToPane(frame.getContentPane());
 
         //Display the window.
-        frame.setSize(300,300);
+        frame.setSize(300, 300);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
