@@ -7,13 +7,12 @@ public class PassingValues{
 
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++){
-                int temp;
-                if (fields[(9*i + j)].getText() == null){
-                    temp = Integer.parseInt(fields[(9*i + j)].getText());
+                String text = fields[(9*i + j)].getText();
+                if (!text.equals(" ")){
+                    array[i][j] = Integer.parseInt(text);
                 } else {
-                    temp = 0;
+                    array[i][j] = 0;
                 }
-                array[i][j] = temp;
             }
         }
 
