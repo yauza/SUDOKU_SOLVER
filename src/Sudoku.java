@@ -1,8 +1,10 @@
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.util.Collection;
 import java.util.Map;
-
+import java.util.Set;
+import java.util.Arrays;
 
 
 public class Sudoku {
@@ -21,7 +23,7 @@ public class Sudoku {
         return formatter;
     }
 
-    static Map<String, JFormattedTextField> fields;
+    public static JFormattedTextField[] arr = new JFormattedTextField[81];
 
     public static void addComponentsToPane(Container pane) {
 
@@ -31,16 +33,15 @@ public class Sudoku {
 
         for (int i = 0; i < 81; i++){
             JFormattedTextField f = new JFormattedTextField(createFormatter("#"));
-            String temp = Integer.toString(i);
-            fields.put(temp, f);
+            arr[i] = f;
         }
 
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                String temp = Integer.toString(i);
+                int a = (9*i + j);
                 JFormattedTextField f;
-                f = fields.get(temp);
+                f = arr[a];
 
                 c.gridy = i;
                 c.gridx = j;
