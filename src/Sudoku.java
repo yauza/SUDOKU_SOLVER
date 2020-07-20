@@ -28,7 +28,6 @@ public class Sudoku {
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-
         for (int i = 0; i < 81; i++){
             JFormattedTextField f = new JFormattedTextField(createFormatter("#"));
             String temp = Integer.toString(i);
@@ -38,7 +37,7 @@ public class Sudoku {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                String temp = Integer.toString(i);
+                String temp = Integer.toString(9*i + j);
                 JFormattedTextField f;
                 f = fields.get(temp);
 
