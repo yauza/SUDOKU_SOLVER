@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -10,7 +12,6 @@ import java.util.Arrays;
 public class Sudoku {
 
 
-    //A convenience method for creating a MaskFormatter.
     public static MaskFormatter createFormatter(String s) {
 
         MaskFormatter formatter = null;
@@ -46,13 +47,13 @@ public class Sudoku {
                 c.gridy = i;
                 c.gridx = j;
                 c.ipadx = 10;
-                c.insets = new Insets(2, 2, 0, 0);  //padding
+                c.insets = new Insets(2, 2, 0, 0);
                 if (i % 3 == 0)
-                    c.insets = new Insets(12, 2, 0, 0);  //padding
+                    c.insets = new Insets(12, 2, 0, 0);
                 if (j % 3 == 0)
-                    c.insets = new Insets(2, 12, 0, 0);  //padding
+                    c.insets = new Insets(2, 12, 0, 0);
                 if (i % 3 == 0 && j % 3 == 0)
-                    c.insets = new Insets(12, 12, 0, 0);  //padding
+                    c.insets = new Insets(12, 12, 0, 0);
                 pane.add(f, c);
 
             }
@@ -64,7 +65,29 @@ public class Sudoku {
         c.gridwidth = 5;
         c.weighty = 1.0;
         pane.add(button, c);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PassingValues chart = new PassingValues();
+                chart.gettingValues(arr);
+                sudokualgo alg = new sudokualgo();
+                alg.getValues(chart.array);
+                if ( alg.solve() ){
+                    for (int i = 0; i < 9; i++){
+                        for (int j = 0; j < 9; j++){
+                            String temp = Integer.toString(alg.arr[i][j]);
+                            arr[(9*i + j)].setText(temp);
+                        }
+                    }
+                } else{
+                    //JOptionPane.showMessageDialog();
+                }
+            }
+        });
     }
+
+
 
     /*
     private static JFormattedTextField createTextField(String fieldName){
@@ -80,6 +103,7 @@ public class Sudoku {
 
         addComponentsToPane(frame.getContentPane());
 
+
         //Display the window.
         frame.setSize(300, 300);
         frame.setSize(300,300);
@@ -93,5 +117,6 @@ public class Sudoku {
                 createAndShowGUI();
             }
         });
+
     }
 }
