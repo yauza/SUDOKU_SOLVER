@@ -19,7 +19,7 @@ public class Sudoku {
         return formatter;
     }
 
-    static Map<JFormattedTextField, int> fields;
+    static Map<String, JFormattedTextField> fields;
 
     public static void addComponentsToPane(Container pane) {
 
@@ -28,12 +28,16 @@ public class Sudoku {
 
         for (int i = 0; i < 81; i++){
             JFormattedTextField f = new JFormattedTextField(createFormatter("#"));
-            fields.put(f, i);
+            String temp = Integer.toString(i);
+            fields.put(temp, f);
         }
 
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
+                String temp = Integer.toString(i);
+                JFormattedTextField f;
+                f = fields.get(temp);
 
                 c.gridy = i;
                 c.gridx = j;
