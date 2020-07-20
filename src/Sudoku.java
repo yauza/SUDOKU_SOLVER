@@ -1,11 +1,14 @@
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.util.Map;
+
+
 
 public class Sudoku {
 
     //A convenience method for creating a MaskFormatter.
-    protected static MaskFormatter createFormatter(String s) {
+    public static MaskFormatter createFormatter(String s) {
         MaskFormatter formatter = null;
         try {
             formatter = new MaskFormatter(s);
@@ -16,14 +19,22 @@ public class Sudoku {
         return formatter;
     }
 
+    static Map<JFormattedTextField, int> fields;
+
     public static void addComponentsToPane(Container pane) {
 
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        for (int i = 0; i < 81; i++){
+            JFormattedTextField f = new JFormattedTextField(createFormatter("#"));
+            fields.put(f, i);
+        }
+
+
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                JFormattedTextField f = new JFormattedTextField(createFormatter("#"));
+
                 c.gridy = i;
                 c.gridx = j;
                 c.ipadx = 10;
@@ -35,6 +46,7 @@ public class Sudoku {
                 if (i % 3 == 0 && j % 3 == 0)
                     c.insets = new Insets(12, 12, 0, 0);  //padding
                 pane.add(f, c);
+
             }
         }
 
@@ -45,6 +57,14 @@ public class Sudoku {
         c.weighty = 1.0;
         pane.add(button, c);
     }
+
+    /*
+    private static JFormattedTextField createTextField(String fieldName){
+        JFormattedTextField field = new JFormattedTextField(createFormatter("#"));
+        fields.put(field, fieldName);
+        return field;
+    }
+     */
 
     private static void createAndShowGUI() {
         //Create and set up the window.
