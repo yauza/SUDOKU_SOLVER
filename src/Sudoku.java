@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class Sudoku {
 
-    //A convenience method for creating a MaskFormatter.
     protected static MaskFormatter createFormatter(String s) {
         MaskFormatter formatter = null;
         try {
@@ -21,6 +20,9 @@ public class Sudoku {
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+
+        JFormattedTextField tab [][] = new JFormattedTextField[9][9];
+
         for(int i = 0; i < 9 ; i++) {
             for (int j = 0; j < 9; j++) {
                 JFormattedTextField f = new JFormattedTextField( createFormatter("#") );
@@ -35,6 +37,7 @@ public class Sudoku {
                 if (i%3 == 0 && j%3 == 0)
                     c.insets = new Insets(12,12,0,0);  //padding
                 pane.add(f, c);
+                tab[i][j] = f;
             }
         }
 
@@ -47,21 +50,16 @@ public class Sudoku {
     }
 
     private static void createAndShowGUI() {
-        //Create and set up the window.
         JFrame frame = new JFrame("s u d o k u");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Set up the content pane.
         addComponentsToPane(frame.getContentPane());
 
-        //Display the window.
         frame.setSize(300,300);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
     public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
