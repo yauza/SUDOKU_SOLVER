@@ -98,7 +98,7 @@ public class Sudoku {
                     label.setText("S O L V E D");
                 } else{
                     for(int i=0; i<81; i++){
-                        arr[i].setText("0");
+                        arr[i].setText("");
                     }
                     label.setText("I M P O S S I B L E");
                 }
