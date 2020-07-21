@@ -111,6 +111,7 @@ public class Sudoku {
                 for (int i = 0; i < 81; i++){
                     arr[i].setText("");
                 }
+                label.setText("");
             }
         });
     }
