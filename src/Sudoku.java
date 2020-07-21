@@ -60,11 +60,26 @@ public class Sudoku {
         }
 
         JButton button = new JButton("s o l v e");
-        c.gridx = 2;
+        c.gridx = 0;
         c.gridy = 10;
         c.gridwidth = 5;
         c.weighty = 1.0;
         pane.add(button, c);
+
+        JButton button_reset = new JButton("r e s e t");
+        c.gridx = 5;
+        c.gridy = 10;
+        c.gridwidth = 5;
+        c.weighty = 1;
+        pane.add(button_reset, c);
+
+        JLabel label = new JLabel();
+        c.gridx = 2;
+        c.gridy = 14;
+        c.gridwidth = 5;
+        c.weighty = 1;
+        pane.add(label, c);
+
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -80,24 +95,26 @@ public class Sudoku {
                             arr[(9*i + j)].setText(temp);
                         }
                     }
+                    label.setText("S O L V E D");
                 } else{
                     for(int i=0; i<81; i++){
                         arr[i].setText("0");
                     }
+                    label.setText("I M P O S S I B L E");
+                }
+            }
+        });
+
+        button_reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < 81; i++){
+                    arr[i].setText("");
                 }
             }
         });
     }
 
-
-
-    /*
-    private static JFormattedTextField createTextField(String fieldName){
-        JFormattedTextField field = new JFormattedTextField(createFormatter("#"));
-        fields.put(field, fieldName);
-        return field;
-    }
-     */
 
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("s u d o k u");
@@ -107,8 +124,7 @@ public class Sudoku {
 
 
         //Display the window.
-        frame.setSize(300, 300);
-        frame.setSize(300,300);
+        frame.setSize(300,400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
