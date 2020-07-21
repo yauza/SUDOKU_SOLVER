@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -10,7 +12,6 @@ import java.util.Arrays;
 public class Sudoku {
 
 
-    //A convenience method for creating a MaskFormatter.
     public static MaskFormatter createFormatter(String s) {
 
         MaskFormatter formatter = null;
@@ -30,7 +31,6 @@ public class Sudoku {
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-
         for (int i = 0; i < 81; i++){
             JFormattedTextField f = new JFormattedTextField(createFormatter("#"));
             arr[i] = f;
@@ -39,6 +39,7 @@ public class Sudoku {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
+                String temp = Integer.toString(9*i + j);
                 int a = (9*i + j);
                 JFormattedTextField f;
                 f = arr[a];
@@ -46,33 +47,75 @@ public class Sudoku {
                 c.gridy = i;
                 c.gridx = j;
                 c.ipadx = 10;
-                c.insets = new Insets(2, 2, 0, 0);  //padding
+                c.insets = new Insets(2, 2, 0, 0);
                 if (i % 3 == 0)
-                    c.insets = new Insets(12, 2, 0, 0);  //padding
+                    c.insets = new Insets(12, 2, 0, 0);
                 if (j % 3 == 0)
-                    c.insets = new Insets(2, 12, 0, 0);  //padding
+                    c.insets = new Insets(2, 12, 0, 0);
                 if (i % 3 == 0 && j % 3 == 0)
-                    c.insets = new Insets(12, 12, 0, 0);  //padding
+                    c.insets = new Insets(12, 12, 0, 0);
                 pane.add(f, c);
 
             }
         }
 
         JButton button = new JButton("s o l v e");
-        c.gridx = 2;
+        c.gridx = 0;
         c.gridy = 10;
         c.gridwidth = 5;
         c.weighty = 1.0;
         pane.add(button, c);
+
+        JButton button_reset = new JButton("r e s e t");
+        c.gridx = 5;
+        c.gridy = 10;
+        c.gridwidth = 5;
+        c.weighty = 1;
+        pane.add(button_reset, c);
+
+        JLabel label = new JLabel();
+        c.gridx = 2;
+        c.gridy = 14;
+        c.gridwidth = 5;
+        c.weighty = 1;
+        pane.add(label, c);
+
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PassingValues chart = new PassingValues();
+                chart.gettingValues(arr);
+                sudokualgo alg = new sudokualgo();
+                alg.getValues(chart.array);
+                if ( alg.solve() ){
+                    for (int i = 0; i < 9; i++){
+                        for (int j = 0; j < 9; j++){
+                            String temp = Integer.toString(alg.arr[i][j]);
+                            arr[(9*i + j)].setText(temp);
+                        }
+                    }
+                    label.setText("S O L V E D");
+                } else{
+                    for(int i=0; i<81; i++){
+                        arr[i].setText("0");
+                    }
+                    label.setText("I M P O S S I B L E");
+                }
+            }
+        });
+
+        button_reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < 81; i++){
+                    arr[i].setText("");
+                }
+                label.setText("");
+            }
+        });
     }
 
-    /*
-    private static JFormattedTextField createTextField(String fieldName){
-        JFormattedTextField field = new JFormattedTextField(createFormatter("#"));
-        fields.put(field, fieldName);
-        return field;
-    }
-     */
 
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("s u d o k u");
@@ -80,9 +123,9 @@ public class Sudoku {
 
         addComponentsToPane(frame.getContentPane());
 
+
         //Display the window.
-        frame.setSize(300, 300);
-        frame.setSize(300,300);
+        frame.setSize(300,400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -93,5 +136,6 @@ public class Sudoku {
                 createAndShowGUI();
             }
         });
+
     }
 }
