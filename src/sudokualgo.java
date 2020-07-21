@@ -31,17 +31,20 @@ public class sudokualgo {
     public boolean possible(int row, int col, int k){
         for(int i=0; i<9; i++){
             //col
-            if(arr[i][col] == k)
+            if(i != row && arr[i][col] == k) {
                 return false;
+            }
             //row
-            if(arr[row][i] == k)
+            if(i != col && arr[row][i] == k) {
                 return false;
+            }
         }
         //square
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
-                if(arr[ 3*(row/3) + i ][ 3*(col/3) + j ] == k)
+                if(3*(row/3) + i != row && 3*(col/3) + j  != col && arr[ 3*(row/3) + i ][ 3*(col/3) + j ] == k) {
                     return false;
+                }
             }
         }
         return true;
@@ -50,7 +53,6 @@ public class sudokualgo {
     public boolean solveAux(int freeFields[][], int n, int i) {
         int row = freeFields[i+1][0];
         int col = freeFields[i+1][1];
-
         //last field
         if(i+1 == n-1) {
             for (int k = 1; k < 10; k++) {
@@ -73,6 +75,19 @@ public class sudokualgo {
     }
 
     public boolean solve(){
+        //entry
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                if (arr[i][j] != 0) {
+                    if (!possible (i, j, arr[i][j])) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+
+
         int countZero = 0;
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
@@ -104,11 +119,5 @@ public class sudokualgo {
         return false;
     }
 
-    /*
-    public static void main(String[] args){
-
-    }
-
-     */
 
 }
