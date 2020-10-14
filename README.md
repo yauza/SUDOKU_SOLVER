@@ -1,6 +1,6 @@
 # SUDOKU_SOLVER
 
-Programme solving sudoku 3x3 grid using the backtracking algorithm.
+Program solving sudoku 3x3 grid using the backtracking algorithm.
 
 Created by: wojkly & yauza
 
